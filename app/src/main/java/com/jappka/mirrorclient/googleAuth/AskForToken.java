@@ -1,4 +1,4 @@
-package com.jappka.mirrorclient;
+package com.jappka.mirrorclient.googleAuth;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

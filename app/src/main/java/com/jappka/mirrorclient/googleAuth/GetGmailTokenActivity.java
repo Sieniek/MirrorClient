@@ -1,4 +1,4 @@
-package com.jappka.mirrorclient;
+package com.jappka.mirrorclient.googleAuth;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.jappka.mirrorclient.R;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
