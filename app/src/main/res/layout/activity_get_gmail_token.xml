@@ -30,7 +30,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Choose Account"
+                    android:text="Choose Google Account"
                     android:id="@+id/chooseAccountButton" />
             </LinearLayout>
 
@@ -60,8 +60,8 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Require Gmail Access"
-                    android:id="@+id/requireGmailAccessButton"
+                    android:text="Require Access"
+                    android:id="@+id/requireGoogleAccessButton"
                     android:enabled="false" />
             </LinearLayout>
 
@@ -73,43 +73,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gmail Token:\n UKNOWN"
-                    android:id="@+id/gmailTokenLabel"
+                    android:text="Auth Token:\n UKNOWN"
+                    android:id="@+id/googleTokenLabel"
                     android:enabled="true"
                     android:visibility="visible" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="200dp"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Require Callendar Access"
-                    android:id="@+id/requireCallendarAccessButton"
-                    android:enabled="false" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Callendar Token:\n UKNOWN"
-                    android:id="@+id/callendarTokenLabel" />
-            </LinearLayout>
-
         </LinearLayout>
 
     </LinearLayout>

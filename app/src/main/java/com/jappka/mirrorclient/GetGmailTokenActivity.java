@@ -13,24 +13,28 @@ import android.widget.TextView;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+/**
+ * Activity with Google API request
+ * Only Gmail and Calendar
+ * Only Read rights
+ */
 public class GetGmailTokenActivity extends AppCompatActivity {
 
     /**
      * Authentication data to Google APIs
      */
-    private final String GMAIL_SCOPE = "oauth2:https://www.googleapis.com/auth/gmail.readonly";
-    private final String CALENDAR_SCOPE = "oauth2:https://www.googleapis.com/auth/calendar.readonly";
+    private final String GMAIL_SCOPE = "https://www.googleapis.com/auth/gmail.readonly";
+    private final String CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar.readonly";
+    private final String FULL_SCOPE = "oauth2:" + GMAIL_SCOPE + " " + CALENDAR_SCOPE;
 
     /**
      * Interface elements on Authentication Page
      */
     private Button requireGmailAccessButton;
     private TextView gmailTokenLabel;
-    private Button requireCallendarAccessButton;
-    private TextView calendarTokenLabel;
     private Button chooseAccountButton;
     private TextView selectedAccountLabel;
-
 
     private final Activity context = this;
     public AccountManager accountManager;
@@ -41,8 +45,7 @@ public class GetGmailTokenActivity extends AppCompatActivity {
      * Elements to get tokens asynchronously
      */
     private final ExecutorService service = Executors.newFixedThreadPool(2);
-    private  Future<String> gmailTask;
-    private  Future<String> calendarTask;
+    private  Future<String> googleTask;
 
     private final int CHOOSE_ACCOUNT = 124;
     private final String errorMessage = "Error! Try again or contact our support (supporrt@magicmirror.com)!";
@@ -58,7 +61,6 @@ public class GetGmailTokenActivity extends AppCompatActivity {
 
         setupAccountPicker();
         setupGmailAuthentication();
-        setupCalendarAuthentication();
     }
 
     /**
@@ -85,16 +87,16 @@ public class GetGmailTokenActivity extends AppCompatActivity {
      */
     private void setupGmailAuthentication(){
 
-        requireGmailAccessButton = (Button) findViewById(R.id.requireGmailAccessButton);
-        gmailTokenLabel = (TextView) findViewById(R.id.gmailTokenLabel);
+        requireGmailAccessButton = (Button) findViewById(R.id.requireGoogleAccessButton);
+        gmailTokenLabel = (TextView) findViewById(R.id.googleTokenLabel);
 
         requireGmailAccessButton.setEnabled(true);
         requireGmailAccessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gmailTask = service.submit(new AskForToken(accountManager, selectedAccount, GMAIL_SCOPE, context));
+                googleTask = service.submit(new AskForToken(accountManager, selectedAccount, FULL_SCOPE, context));
                 try {
-                    String token = gmailTask.get();
+                    String token = googleTask.get();
                     gmailTokenLabel.setText("Token:\n" + token);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -105,32 +107,8 @@ public class GetGmailTokenActivity extends AppCompatActivity {
     }
 
     /**
-     * Set all listeners
-     * Ask for Google Calendar auth token after click on button
-     */
-    private void setupCalendarAuthentication(){
-
-        requireCallendarAccessButton = (Button) findViewById(R.id.requireCallendarAccessButton);
-        calendarTokenLabel = (TextView) findViewById(R.id.callendarTokenLabel);
-
-        requireCallendarAccessButton.setEnabled(true);
-        requireCallendarAccessButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calendarTask = service.submit(new AskForToken(accountManager, selectedAccount, CALENDAR_SCOPE, context));
-                try {
-                    String token = calendarTask.get();
-                    calendarTokenLabel.setText("Token:\n" + token);
-                } catch (Exception e){
-                    e.printStackTrace();
-                    calendarTokenLabel.setText(errorMessage);
-                }
-            }
-        });
-    }
-
-    /**
      * Method to retrieve result from system account picker
+     * TODO: Refactor this
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
