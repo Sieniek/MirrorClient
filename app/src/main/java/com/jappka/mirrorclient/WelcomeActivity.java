@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.jappka.mirrorclient.googleAuth.GetGmailTokenActivity;
+import com.jappka.mirrorclient.networkChecking.NetworkConnectionActivity;
 
 /**
  * First activity that users see after open our app
@@ -37,7 +37,7 @@ public class WelcomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
+                Intent nextActivity = new Intent(WelcomeActivity.this, NetworkConnectionActivity.class);
                 startActivity(nextActivity);
             }
         });

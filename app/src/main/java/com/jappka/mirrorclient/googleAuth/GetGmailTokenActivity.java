@@ -46,7 +46,7 @@ public class GetGmailTokenActivity extends AppCompatActivity {
     /**
      * Elements to get tokens asynchronously
      */
-    private final ExecutorService service = Executors.newFixedThreadPool(2);
+    private final ExecutorService service = Executors.newFixedThreadPool(1);
     private  Future<String> googleTask;
 
     private final int CHOOSE_ACCOUNT = 124;

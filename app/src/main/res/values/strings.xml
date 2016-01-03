@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MirrorClient</string>
+    <string name="networkTest_testButton_normal">Test connection</string>
+    <string name="networkTest_testButton_inProgress">Testing</string>
+
 </resources>
