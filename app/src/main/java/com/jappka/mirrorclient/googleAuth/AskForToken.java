@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telecom.Call;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
@@ -40,6 +42,8 @@ public class AskForToken implements Callable<String> {
     public String call() throws OperationCanceledException {
         try {
             AccountManagerFuture<Bundle> acc = accountManager.getAuthToken(account, scope, null, context, null, null);
+
+
             Bundle authTokenBundle = acc.getResult();
             token = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN).toString();
             //Can be thrown: NullPointerException, OperationCanceledException, IOException, AuthenticatorException
@@ -49,7 +53,7 @@ public class AskForToken implements Callable<String> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        System.out.print(token);
         return token;
     }
 }

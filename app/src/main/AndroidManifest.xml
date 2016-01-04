@@ -12,15 +12,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".googleAuth.GetGmailTokenActivity"></activity>
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".googleAuth.GetGmailTokenActivity" />
+        <activity android:name=".welcomePage.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".networkChecking.NetworkConnectionActivity"></activity>
+        <activity android:name=".networkChecking.NetworkConnectionActivity" />
+        <activity
+            android:name=".widget.WidgetActivity"
+            android:label="@string/title_activity_widget"></activity>
     </application>
 
 </manifest>

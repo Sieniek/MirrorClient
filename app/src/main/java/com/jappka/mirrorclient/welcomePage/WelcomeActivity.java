@@ -1,12 +1,14 @@
-package com.jappka.mirrorclient;
+package com.jappka.mirrorclient.welcomePage;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.jappka.mirrorclient.networkChecking.NetworkConnectionActivity;
+import com.jappka.mirrorclient.R;
+import com.jappka.mirrorclient.widget.CallAPI;
 
 /**
  * First activity that users see after open our app
@@ -25,6 +27,8 @@ public class WelcomeActivity extends Activity {
 
         setContentView(R.layout.activity_welcome);
         setupMoveToNextActivityAction();
+
+//        networkTest();
     }
 
     /**
@@ -37,8 +41,23 @@ public class WelcomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nextActivity = new Intent(WelcomeActivity.this, NetworkConnectionActivity.class);
-                startActivity(nextActivity);
+//                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
+//                startActivity(nextActivity);
+
+                Context context = getApplicationContext();
+                CharSequence text = "Hello toast!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+                Thread n = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CallAPI.networkTest();
+                    }
+                });
+                n.start();
             }
         });
     }

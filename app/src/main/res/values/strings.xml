@@ -2,5 +2,11 @@
     <string name="app_name">MirrorClient</string>
     <string name="networkTest_testButton_normal">Test connection</string>
     <string name="networkTest_testButton_inProgress">Testing</string>
-
+    <string name="title_activity_widget">WidgetActivity</string>
+    <string name="google_account_chooser_description">
+        Choose your Google account to use it on Smart Mirror device
+    </string>
+    <string name="google_account_access_request_description">
+        Grant access for Mirror device to your Google Calendar and Gmail
+    </string>
 </resources>
