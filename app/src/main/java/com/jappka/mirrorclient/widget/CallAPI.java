@@ -99,7 +99,7 @@ public class CallAPI {
 
             // Set headers
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("charset", "UTF-8");
+//            connection.setRequestProperty("charset", "UTF-8");
 
             //Set timeouts
             connection.setReadTimeout(10000);
@@ -120,7 +120,7 @@ public class CallAPI {
 
             OutputStream os = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-
+            System.out.print(widgetData.toString());
             writer.write(widgetData.toString());
             writer.flush();
             writer.close();
@@ -130,25 +130,10 @@ public class CallAPI {
 
             int responseCode = connection.getResponseCode();
             System.out.println("\nSending 'POST' request to URL : " + url);
-//            System.out.println("Post parameters : " + urlParameters);
             System.out.println("Response Code : " + responseCode);
 
 //                InputStream error = connection.getErrorStream();
 
-//            String str = CharStreams.toString(new InputStreamReader(error, "UTF-8"));
-//            System.out.print("Erorr message: "+str);
-//            BufferedReader in = new BufferedReader(
-//                    new InputStreamReader(connection.getInputStream()));
-//            String inputLine;
-//            StringBuffer response = new StringBuffer();
-//
-//            while ((inputLine = in.readLine()) != null) {
-//                response.append(inputLine);
-//            }
-//            in.close();
-//
-//            //print result
-//            System.out.println(response.toString());
 
 
         } catch (IOException | JSONException e) {

@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         android:id="@+id/logoImage"
-        android:layout_above="@+id/title"
         android:contentDescription="logoImage"
         android:background="@drawable/welcome_background_portrait"
         android:layout_alignParentLeft="true"

@@ -2,6 +2,7 @@ package com.jappka.mirrorclient.welcomePage;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.jappka.mirrorclient.R;
 import com.jappka.mirrorclient.widget.CallAPI;
+import com.jappka.mirrorclient.widget.WidgetActivity;
 
 /**
  * First activity that users see after open our app
@@ -41,23 +43,23 @@ public class WelcomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
-//                startActivity(nextActivity);
+                Intent nextActivity = new Intent(WelcomeActivity.this, WidgetActivity.class);
+                startActivity(nextActivity);
 
-                Context context = getApplicationContext();
-                CharSequence text = "Hello toast!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-                Thread n = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        CallAPI.networkTest();
-                    }
-                });
-                n.start();
+//                Context context = getApplicationContext();
+//                CharSequence text = "Hello toast!";
+//                int duration = Toast.LENGTH_SHORT;
+//
+//                Toast toast = Toast.makeText(context, text, duration);
+//                toast.show();
+//
+//                Thread n = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        CallAPI.networkTest();
+//                    }
+//                });
+//                n.start();
             }
         });
     }
