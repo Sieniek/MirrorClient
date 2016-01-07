@@ -42,7 +42,7 @@ public class CallAPI {
     /**
      * Urls to use while calling API
      */
-    private static final String SERVER_URL = "https://192.168.0.21:8000";
+    private static final String SERVER_URL = "https://192.168.1.13:8000";
     private static final String WIDGET_ENDPOINT_URL = SERVER_URL + "/api/widgets";
 
     // always verify the host - don't check for certificate
@@ -57,25 +57,25 @@ public class CallAPI {
     // TODO: fix checking for certificate
     private static void trustAll() {
         TrustManager[] trustEverythingTrustManager = new TrustManager[]{
-            new X509TrustManager() {
+                new X509TrustManager() {
 
-                public void checkClientTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {
-                    // TODO Auto-generated method stub
+                    public void checkClientTrusted(X509Certificate[] chain,
+                                                   String authType) throws CertificateException {
+                        // TODO Auto-generated method stub
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] chain,
+                                                   String authType) throws CertificateException {
+                        // TODO Auto-generated method stub
+
+                    }
+
+                    public X509Certificate[] getAcceptedIssuers() {
+                        // TODO Auto-generated method stub
+                        return null;
+                    }
+
                 }
-
-                public void checkServerTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {
-                    // TODO Auto-generated method stub
-
-                }
-
-                public X509Certificate[] getAcceptedIssuers() {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-            }
         };
 
         SSLContext sc;
@@ -132,40 +132,63 @@ public class CallAPI {
             System.out.println("\nSending 'POST' request to URL : " + url);
             System.out.println("Response Code : " + responseCode);
 
-//                InputStream error = connection.getErrorStream();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addWidget(Widget widget){
+        widgetAPICall(widget, "POST");
+    }
+
+    public static void removeWidget(Widget widget){
+        widgetAPICall(widget, "DELETE");
+    }
+
+    private static void widgetAPICall(final Widget widget, String method) {
+        try {
+            trustAll();
+            URL url = new URL(WIDGET_ENDPOINT_URL);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setHostnameVerifier(DO_NOT_VERIFY);
+            connection.setRequestMethod(method);
+
+            // Set headers
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            //Set timeouts
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            JSONObject widgetData = new JSONObject();
+
+            widgetData.put("name", widget.getApiName());
+            widgetData.put("row", widget.getxPosition());
+            widgetData.put("col", widget.getyPosition());
+            widgetData.put("sizeX", widget.getWidth());
+            widgetData.put("sizeY", widget.getHeight());
+            widgetData.put("delay", "0");
 
 
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            System.out.print(widgetData.toString());
+            writer.write(widgetData.toString());
+            writer.flush();
+            writer.close();
+            os.close();
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
-
     }
-
-    /**
-     * Translate List of Pairs of parameters to single String
-     * @param params List of parameters (key, value Pair)
-     * @return Parameters as a single String
-     * @throws UnsupportedEncodingException
-     */
-    private static String getQuery(List<Pair<String, String>> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        for (Pair<String, String> pair : params) {
-            if (first) {
-                first = false;
-            } else {
-                result.append("&");
-            }
-
-            result.append(URLEncoder.encode(pair.first, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(pair.second, "UTF-8"));
-        }
-
-        return result.toString();
-    }
-
 }

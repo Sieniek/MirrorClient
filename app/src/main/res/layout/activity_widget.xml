@@ -17,7 +17,68 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"></RelativeLayout>
+            android:layout_weight="1"
+            android:id="@+id/drawBoard"
+            android:background="#000000">
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/widgetWhite"
+                android:visibility="gone"
+                android:id="@+id/twitterIcon"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="false"></RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#2a892e"
+                android:visibility="gone"
+                android:id="@+id/clockIcon"
+                android:layout_alignParentStart="true" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#52277c"
+                android:visibility="gone"
+                android:id="@+id/newsIcon"
+                android:layout_alignParentStart="true" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#35bf0b"
+                android:visibility="gone"
+                android:id="@+id/spotifyIcon"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="true" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#d10000"
+                android:visibility="gone"
+                android:id="@+id/gmailIcon"
+                android:layout_alignParentStart="true" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#bc7f34"
+                android:visibility="gone"
+                android:id="@+id/weatherIcon"
+                android:layout_alignParentStart="true" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#167e5c"
+                android:visibility="gone"
+                android:id="@+id/calendarIcon"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -57,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/widgetTypeSpinner"
                         android:layout_gravity="center_vertical"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dialog" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -166,7 +227,7 @@
 
                     <SeekBar
                         android:layout_width="fill_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:indeterminate="false"
                         android:max="6"
@@ -204,7 +265,7 @@
 
                     <SeekBar
                         android:layout_width="fill_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:id="@+id/heightSeekBar"
                         android:layout_gravity="center_vertical"
                         android:indeterminate="false"
@@ -222,9 +283,27 @@
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/button"
-                    android:layout_margin="16dp" />
+                    android:text="Add"
+                    android:id="@+id/addWidgetButton"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove"
+                    android:id="@+id/removeWidgetButton"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove All"
+                    android:id="@+id/removeAllWidgetsButton"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1" />
+
             </LinearLayout>
         </LinearLayout>
 

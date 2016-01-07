@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
  * Only Gmail and Calendar
  * Only Read rights
  */
-public class GetGmailTokenActivity extends AppCompatActivity {
+public class GetGmailTokenActivity extends Activity {
 
     /**
      * Authentication data to Google APIs
