@@ -4,14 +4,20 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.jappka.mirrorclient.R;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -23,13 +29,18 @@ import java.util.concurrent.Future;
  */
 public class GetGmailTokenActivity extends Activity {
 
+    private String ANDROID_CLIENT_ID = "387059502730-evjnel90rugkut7b4ngrdbnj3ge2lm5q.apps.googleusercontent.com";
+
     /**
      * Authentication data to Google APIs
      */
     private final String GMAIL_SCOPE = "https://www.googleapis.com/auth/gmail.readonly";
     private final String CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar.readonly";
     private final String FULL_SCOPE = "oauth2:" + GMAIL_SCOPE + " " + CALENDAR_SCOPE;
-
+    private final String GET_AUTH_CODE_SCOPE = "audience:server:client_id:387059502730-bkjab985i9g2e6kivndov5g1c8j72sm6.apps.googleusercontent.com";
+    private final String SCOPE = "oauth2:server:client_id:" +
+            "387059502730-bkjab985i9g2e6kivndov5g1c8j72sm6.apps.googleusercontent.com:api_scope:" +
+            GMAIL_SCOPE;//+ " " + CALENDAR_SCOPE;
     /**
      * Interface elements on Authentication Page
      */
@@ -96,14 +107,16 @@ public class GetGmailTokenActivity extends Activity {
         requireGmailAccessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleTask = service.submit(new AskForToken(accountManager, selectedAccount, FULL_SCOPE, context));
-                try {
-                    String token = googleTask.get();
-                    gmailTokenLabel.setText("Token:\n" + token);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    gmailTokenLabel.setText(errorMessage);
-                }
+//                googleTask = service.submit(new AskForToken(accountManager, selectedAccount, FULL_SCOPE, context));
+//                try {
+//                    String token = googleTask.get();
+//                    gmailTokenLabel.setText("Token:\n" + token);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    gmailTokenLabel.setText(errorMessage);
+//                }
+                new RetrieveTokenTask().execute("");
+
             }
         });
     }
@@ -131,6 +144,29 @@ public class GetGmailTokenActivity extends Activity {
                     }
                 }
             }
+        }
+    }
+
+    private class RetrieveTokenTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String token = null;
+            try {
+                token = GoogleAuthUtil.getToken(getApplicationContext(), selectedAccount.name, SCOPE);
+            } catch (UserRecoverableAuthException e) {
+                startActivityForResult(e.getIntent(), CHOOSE_ACCOUNT);
+            } catch (IOException | GoogleAuthException e) {
+                e.printStackTrace();
+            }
+            return token;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            ((TextView) findViewById(R.id.googleTokenLabel)).setText("Token Value: " + s);
+            System.out.print("TOKEN: "+ s);
         }
     }
 }

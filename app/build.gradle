@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.jappka.mirrorclient"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.api-client:google-api-client:1.19.1'
     compile 'com.google.android.gms:play-services:3.1.+'
+    compile 'com.pes.materialcolorpicker:library:1.0.1'
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.jappka.mirrorclient.R;
+import com.jappka.mirrorclient.colorPicker.ColorPickerActivity;
 import com.jappka.mirrorclient.googleAuth.GetGmailTokenActivity;
 import com.jappka.mirrorclient.widget.WidgetActivity;
 
@@ -34,7 +35,7 @@ public class WelcomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
+                Intent nextActivity = new Intent(WelcomeActivity.this, ColorPickerActivity.class);
                 startActivity(nextActivity);
 
             }

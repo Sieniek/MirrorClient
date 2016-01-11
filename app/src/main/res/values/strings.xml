@@ -9,4 +9,7 @@
     <string name="google_account_access_request_description">
         Grant access for Mirror device to your Google Calendar and Gmail
     </string>
+    <string name="title_activity_color_picker">ColorPickerActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
