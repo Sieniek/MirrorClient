@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jappka.mirrorclient.R;
 import com.jappka.mirrorclient.colorPicker.ColorPickerActivity;
 import com.jappka.mirrorclient.googleAuth.GetGmailTokenActivity;
+import com.jappka.mirrorclient.networkChecking.NetworkConnectionActivity;
 import com.jappka.mirrorclient.widget.WidgetActivity;
 
 /**
@@ -17,12 +21,35 @@ import com.jappka.mirrorclient.widget.WidgetActivity;
  */
 public class WelcomeActivity extends Activity {
 
+
+    RelativeLayout welcomeButtonsContainer, welcomePageFirstLayout;
+    Button widgetActivityButton, networkCheckingButton, googleAuthButton, colorPicketButton,
+            creditsButton, startButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_welcome);
-        setupMoveToNextActivityAction();
+
+        setupElements();
+        setupStartButton();
+        setupWidgetActivityButton();
+        setupNetworkCheckingButton();
+        setupGoogleAuthButton();
+        setupColorPicketButton();
+        setupCreditsButton();
+    }
+
+    private void setupElements(){
+        welcomePageFirstLayout = (RelativeLayout) findViewById(R.id.welcomePageFirstLayout);
+        welcomeButtonsContainer = (RelativeLayout) findViewById(R.id.welcomeButtonsContainer);
+        widgetActivityButton = (Button) findViewById(R.id.widgetButton);
+        networkCheckingButton = (Button) findViewById(R.id.networkCheckingButton);
+        googleAuthButton = (Button) findViewById(R.id.googleAuthButton);
+        colorPicketButton = (Button) findViewById(R.id.colorPickerButton);
+        creditsButton = (Button) findViewById(R.id.creditsButton);
+        startButton = (Button) findViewById(R.id.startButton);
     }
 
     /**
@@ -30,9 +57,50 @@ public class WelcomeActivity extends Activity {
      * App should move to next activity
      * TODO: Verify if getGmailToken is right activity
      */
-    private void setupMoveToNextActivityAction(){
-        Button startButton = (Button) findViewById(R.id.startButton);
+    private void setupStartButton(){
         startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                welcomeButtonsContainer.setVisibility(View.VISIBLE);
+                welcomePageFirstLayout.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void setupWidgetActivityButton(){
+        widgetActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(WelcomeActivity.this, WidgetActivity.class);
+                startActivity(nextActivity);
+
+            }
+        });
+    }
+
+    private void setupNetworkCheckingButton(){
+        networkCheckingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(WelcomeActivity.this, NetworkConnectionActivity.class);
+                startActivity(nextActivity);
+
+            }
+        });
+    }
+
+    private void setupGoogleAuthButton(){
+        googleAuthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
+                startActivity(nextActivity);
+
+            }
+        });
+    }
+
+    private void setupColorPicketButton(){
+        colorPicketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent nextActivity = new Intent(WelcomeActivity.this, ColorPickerActivity.class);
@@ -41,4 +109,16 @@ public class WelcomeActivity extends Activity {
             }
         });
     }
+
+    private void setupCreditsButton(){
+        creditsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
+//                startActivity(nextActivity);
+
+            }
+        });
+    }
+
 }

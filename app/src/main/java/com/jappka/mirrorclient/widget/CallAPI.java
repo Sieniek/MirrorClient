@@ -191,4 +191,61 @@ public class CallAPI {
             e.printStackTrace();
         }
     }
+
+
+    public static void exchengeCodeForToken(String code, String client_id, String client_secret) {
+        String urlParameters = "grant_type=authorization_code" +
+                "&redirect_uri=postmessage" +
+                "&code=" + code +
+                "&client_id=" + client_id +
+                "&client_secret=" + client_secret;
+        try {
+            trustAll();
+//            URL url = new URL("https://www.googleapis.com/oauth2/v4/token");
+            String urlString = "https://accounts.google.com/o/oauth2/token";
+
+            //parameters grant_type=authorization_code&redirect_uri=postmessage&code=4/iOg0-7tGX7whkSQJBkXj8x7VA2jOWK43LgvyeGa9hXQ&client_id=483610214847-dal7psphmr4tvhgc6cqs2h5b62bo9eba.apps.googleusercontent.com&client_secret=L9YcHMfpSyYPwDKU9VVwnEUO
+            URL url = new URL(urlString);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+//            connection.setHostnameVerifier(DO_NOT_VERIFY);
+            connection.setRequestMethod("POST");
+
+            // Set headers
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
+
+            //Set timeouts
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+//            JSONObject widgetData = new JSONObject();
+//            widgetData.put("code", code);
+//            widgetData.put("client_id", client_id);
+//            widgetData.put("client_secret", client_secret);
+//            widgetData.put("redirect_uri", "postmessage");
+//            widgetData.put("grant_type", "authorization_code");
+
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            System.out.print(urlParameters);
+            writer.write(urlParameters);
+            writer.flush();
+            writer.close();
+            os.close();
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            String response = connection.getResponseMessage();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            System.out.println("Response msg : " + response);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

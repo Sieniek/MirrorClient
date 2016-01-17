@@ -1,5 +1,6 @@
 package com.jappka.mirrorclient.networkChecking;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class NetworkConnectionActivity extends AppCompatActivity {
+public class NetworkConnectionActivity extends Activity {
 
 
     EditText hostField;

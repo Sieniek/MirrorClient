@@ -28,10 +28,6 @@ public class ColorPickerActivity extends Activity {
 
     private void setupColorPicker(){
         colorPicker = new ColorPicker(ColorPickerActivity.this);
-
-
-
-
     }
 
     private void setupColorPickerButton(){

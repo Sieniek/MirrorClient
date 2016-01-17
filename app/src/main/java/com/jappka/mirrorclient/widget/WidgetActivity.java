@@ -1,6 +1,7 @@
 package com.jappka.mirrorclient.widget;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import com.jappka.mirrorclient.R;
+import com.jappka.mirrorclient.colorPicker.ColorPickerActivity;
 
 import java.util.ArrayList;
 
@@ -78,7 +80,6 @@ public class WidgetActivity extends Activity {
         addWidgetButton = (Button) findViewById(R.id.addWidgetButton);
         removeWidgetButton = (Button) findViewById(R.id.removeWidgetButton);
         removeAllWidgetsButton = (Button) findViewById(R.id.removeAllWidgetsButton);
-
     }
 
     private void setupBoard(){
@@ -160,7 +161,7 @@ public class WidgetActivity extends Activity {
                 // set icon visible
                 if (position != 0) {
                     // remove all icons from board
-                    for(Widget widget:widgetList) {
+                    for (Widget widget : widgetList) {
                         widget.getIcon().setVisibility(View.GONE);
                     }
 
@@ -317,5 +318,4 @@ public class WidgetActivity extends Activity {
             }
         });
     }
-
 }
