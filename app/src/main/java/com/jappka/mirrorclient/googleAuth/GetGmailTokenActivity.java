@@ -166,12 +166,14 @@ public class GetGmailTokenActivity extends Activity {
             System.out.print(SCOPE);
             try {
                 code = GoogleAuthUtil.getToken(getApplicationContext(), selectedAccount.name, SCOPE);
+                GoogleAuthUtil.invalidateToken(getApplicationContext(), code);
+                code = GoogleAuthUtil.getToken(getApplicationContext(), selectedAccount.name, SCOPE);
             } catch (UserRecoverableAuthException e) {
                 startActivityForResult(e.getIntent(), CHOOSE_ACCOUNT);
             } catch (IOException | GoogleAuthException e) {
                 e.printStackTrace();
             }
-
+            System.out.print(code);
             CallAPI.exchengeCodeForToken(code, MIRROR_ID, MIRROR_SECRET);
             return code;
         }
@@ -180,7 +182,6 @@ public class GetGmailTokenActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             ((TextView) findViewById(R.id.googleTokenLabel)).setText("Token Value: " + s);
-            System.out.print("TOKEN: "+ s);
         }
     }
 

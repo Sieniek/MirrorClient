@@ -194,6 +194,10 @@ public class CallAPI {
 
 
     public static void exchengeCodeForToken(String code, String client_id, String client_secret) {
+        if(code == null){
+            return;
+        }
+
         String urlParameters = "grant_type=authorization_code" +
                 "&redirect_uri=postmessage" +
                 "&code=" + code +
@@ -238,11 +242,14 @@ public class CallAPI {
 
             connection.connect();
 
-            int responseCode = connection.getResponseCode();
-            String response = connection.getResponseMessage();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-            System.out.println("Response msg : " + response);
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line+"\n");
+            }
+            br.close();
+            System.out.print(sb.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
