@@ -1,29 +1,22 @@
 package com.jappka.mirrorclient.widget;
 
-import android.util.Pair;
-
-import com.google.api.client.util.IOUtils;
-import com.google.common.io.CharStreams;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -42,8 +35,12 @@ public class CallAPI {
     /**
      * Urls to use while calling API
      */
-    private static final String SERVER_URL = "https://192.168.1.13:8000";
+    private static final String SERVER_URL = "https://192.168.1.7:8000";
     private static final String WIDGET_ENDPOINT_URL = SERVER_URL + "/api/widgets";
+    private static final String TOKENS_ENDPOINT = SERVER_URL + "/api/google/token";
+    private static final String COLOR_ENDPOINT = SERVER_URL + "/api/led";
+    private static final String HDMI_ENDPOINT = SERVER_URL + "/api/hdmi";
+    private static final String TWITTER_ENDPOINT = SERVER_URL + "/api/tweets";
 
     // always verify the host - don't check for certificate
     // TODO: fix checking for certificate
@@ -61,17 +58,13 @@ public class CallAPI {
 
                     public void checkClientTrusted(X509Certificate[] chain,
                                                    String authType) throws CertificateException {
-                        // TODO Auto-generated method stub
                     }
 
                     public void checkServerTrusted(X509Certificate[] chain,
                                                    String authType) throws CertificateException {
-                        // TODO Auto-generated method stub
-
                     }
 
                     public X509Certificate[] getAcceptedIssuers() {
-                        // TODO Auto-generated method stub
                         return null;
                     }
 
@@ -88,18 +81,25 @@ public class CallAPI {
         }
     }
 
-    public static void networkTest() {
+    public static void addWidget(Widget widget){
+        widgetAPICall(widget, "POST");
+    }
 
+    public static void removeWidget(Widget widget){
+        widgetAPICall(widget, "DELETE");
+    }
+
+
+    public static void setColor(final String color) {
         try {
             trustAll();
-            URL url = new URL(WIDGET_ENDPOINT_URL);
+            URL url = new URL(COLOR_ENDPOINT);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setHostnameVerifier(DO_NOT_VERIFY);
             connection.setRequestMethod("POST");
 
             // Set headers
             connection.setRequestProperty("Content-Type", "application/json");
-//            connection.setRequestProperty("charset", "UTF-8");
 
             //Set timeouts
             connection.setReadTimeout(10000);
@@ -110,12 +110,7 @@ public class CallAPI {
 
             JSONObject widgetData = new JSONObject();
 
-            widgetData.put("name", "clock-and-weather");
-            widgetData.put("row", "2");
-            widgetData.put("col", "1");
-            widgetData.put("sizeX", "3");
-            widgetData.put("sizeY", "3");
-            widgetData.put("delay", "0");
+            widgetData.put("color", color);
 
 
             OutputStream os = connection.getOutputStream();
@@ -135,14 +130,6 @@ public class CallAPI {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void addWidget(Widget widget){
-        widgetAPICall(widget, "POST");
-    }
-
-    public static void removeWidget(Widget widget){
-        widgetAPICall(widget, "DELETE");
     }
 
     private static void widgetAPICall(final Widget widget, String method) {
@@ -192,26 +179,25 @@ public class CallAPI {
         }
     }
 
-
-    public static void exchengeCodeForToken(String code, String client_id, String client_secret) {
+    public static Map<String, String> exchangeCodeForToken(String code, String client_id, String client_secret) {
         if(code == null){
-            return;
+            return null;
         }
 
+        Map<String, String> tokens = new HashMap<>();
         String urlParameters = "grant_type=authorization_code" +
-                "&redirect_uri=postmessage" +
+                "&redirect_uri=http://server.mirror.jappka.com" +
                 "&code=" + code +
                 "&client_id=" + client_id +
                 "&client_secret=" + client_secret;
+
         try {
             trustAll();
-//            URL url = new URL("https://www.googleapis.com/oauth2/v4/token");
             String urlString = "https://accounts.google.com/o/oauth2/token";
 
-            //parameters grant_type=authorization_code&redirect_uri=postmessage&code=4/iOg0-7tGX7whkSQJBkXj8x7VA2jOWK43LgvyeGa9hXQ&client_id=483610214847-dal7psphmr4tvhgc6cqs2h5b62bo9eba.apps.googleusercontent.com&client_secret=L9YcHMfpSyYPwDKU9VVwnEUO
             URL url = new URL(urlString);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-//            connection.setHostnameVerifier(DO_NOT_VERIFY);
+            connection.setHostnameVerifier(DO_NOT_VERIFY);
             connection.setRequestMethod("POST");
 
             // Set headers
@@ -225,17 +211,81 @@ public class CallAPI {
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
-//            JSONObject widgetData = new JSONObject();
-//            widgetData.put("code", code);
-//            widgetData.put("client_id", client_id);
-//            widgetData.put("client_secret", client_secret);
-//            widgetData.put("redirect_uri", "postmessage");
-//            widgetData.put("grant_type", "authorization_code");
-
             OutputStream os = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             System.out.print(urlParameters);
             writer.write(urlParameters);
+            writer.flush();
+            writer.close();
+            os.close();
+
+
+            connection.connect();
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line+"\n");
+                if(line.contains("access_token")){
+                    String auth_token;
+                    auth_token = line.replace("\"", "").replace(",", "").replace(" access_token : ", "").replace(" ", "");
+                    tokens.put("auth_token", auth_token);
+                    continue;
+                }
+                if(line.contains("refresh_token")){
+                    String refresh_token;
+                    refresh_token = line.replace("\"", "").replace(",","").replace(" refresh_token : ","").replace(" ", "");
+                    tokens.put("refresh_token", refresh_token);
+                }
+            }
+
+            br.close();
+
+            sendTokens(tokens, "POST");
+            System.out.print(sb.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tokens;
+    }
+
+    private static void sendTokens(Map<String, String> tokens, String method){
+        if(method == "POST") {
+            sendTokens(tokens, "DELETE");
+        }
+        try {
+            trustAll();
+            URL url = new URL(TOKENS_ENDPOINT);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setHostnameVerifier(DO_NOT_VERIFY);
+            connection.setRequestMethod(method);
+
+            // Set headers
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            //Set timeouts
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            JSONObject widgetData = new JSONObject();
+
+            System.out.println(tokens.get("auth_token"));
+            System.out.println(tokens.get("refresh_token"));
+
+            widgetData.put("token", tokens.get("auth_token"));
+            widgetData.put("refresh_token", tokens.get("refresh_token"));
+
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            System.out.println("=========== TOKENS ==========");
+            System.out.println(widgetData.toString());
+            writer.write(widgetData.toString());
             writer.flush();
             writer.close();
             os.close();
@@ -245,13 +295,96 @@ public class CallAPI {
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder sb = new StringBuilder();
             String line;
+
             while ((line = br.readLine()) != null) {
                 sb.append(line+"\n");
             }
-            br.close();
-            System.out.print(sb.toString());
+            System.out.println("Response Mesage (tokens): " + sb);
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static void turnOnMirror(String method){
+        try {
+            trustAll();
+            URL url = new URL(HDMI_ENDPOINT);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setHostnameVerifier(DO_NOT_VERIFY);
+            connection.setRequestMethod(method);
+
+            // Set headers
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            //Set timeouts
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+
+            connection.connect();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line+"\n");
+            }
+            System.out.println("Response Mesage (tokens): " + sb);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void turnOffMirror(){
+        turnOnMirror("DELETE");
+    }
+
+    public static void setTwitter(String text) {
+        try {
+            trustAll();
+            URL url = new URL(TWITTER_ENDPOINT);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setHostnameVerifier(DO_NOT_VERIFY);
+            connection.setRequestMethod("POST");
+
+            // Set headers
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            //Set timeouts
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            JSONObject widgetData = new JSONObject();
+
+            widgetData.put("phrase", text);
+
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            System.out.println(widgetData.toString());
+            writer.write(widgetData.toString());
+            writer.flush();
+            writer.close();
+            os.close();
+
+            connection.connect();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line+"\n");
+            }
+            System.out.println("Response Message (tweeter): " + sb);
+
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }

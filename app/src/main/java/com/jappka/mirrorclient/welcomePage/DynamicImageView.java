@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 /**
  * Created by psienkiewicz on 04/01/16.
- * It's came from http://stackoverflow.com/questions/13992535/android-imageview-scale-smaller-image-to-width-with-flexible-height-without-crop
  */
 public class DynamicImageView extends ImageView {
 

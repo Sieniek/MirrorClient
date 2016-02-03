@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jappka.mirrorclient.R;
+import com.jappka.mirrorclient.widget.CallAPI;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -22,8 +23,8 @@ import java.util.concurrent.TimeoutException;
 
 public class NetworkConnectionActivity extends Activity {
 
+    private final String HOSTNAME = "https://rapsberry:8000";
 
-    EditText hostField;
     TextView responseTextView;
     Button testConnectionButton;
 
@@ -45,9 +46,25 @@ public class NetworkConnectionActivity extends Activity {
      */
     private void setupNetworkTest(){
 
-        hostField = (EditText) findViewById(R.id.inputHostTextField);
         responseTextView = (TextView) findViewById(R.id.responseTextView);
         testConnectionButton = (Button) findViewById(R.id.testConnectionButton);
+        Button b = (Button) findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        CallAPI.turnOnMirror("DELETE");
+                        TextView tx = (TextView) findViewById(R.id.editText);
+                        CallAPI.setTwitter(String.valueOf(tx.getText()));
+                    }
+                });
+                thread.start();
+
+            }
+        });
 
         testConnectionButton.setOnClickListener(new View.OnClickListener() {
 
@@ -65,19 +82,25 @@ public class NetworkConnectionActivity extends Activity {
             public void onClick(View v) {
                 turnOffButton();
 
-                networkPingTask = service.submit(new NetworkPing(hostField.getText().toString()));
+                networkPingTask = service.submit(new NetworkPing(HOSTNAME));
 
                 try {
                     Boolean testConnection = networkPingTask.get(1, TimeUnit.SECONDS);
                     responseTextView.setText(testConnection.toString());
                 } catch ( TimeoutException e){
-                    responseTextView.setText("false");
+                    responseTextView.setText("Brak połączenia");
                     e.printStackTrace();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
-                    responseTextView.setText("And error occurred!");
+                    responseTextView.setText("Nawiązano połączenie");
                 }
-
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CallAPI.turnOnMirror("POST");
+                    }
+                });
+                thread.start();
                 turnOnButton();
             }
         });

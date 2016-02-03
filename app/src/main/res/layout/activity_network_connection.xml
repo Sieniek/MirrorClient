@@ -19,32 +19,22 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="None"
-                android:id="@+id/responseTextView" />
+                android:text="Brak danych"
+                android:id="@+id/responseTextView"
+                android:textAppearance="@style/Title"
+                android:gravity="center" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:layout_weight="3">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/inputHostTextField"
-                android:hint="Type your hostname here"
-                android:layout_marginTop="20dp" />
-        </LinearLayout>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -54,10 +44,18 @@
             android:layout_weight="3">
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
                 android:text="@string/networkTest_testButton_normal"
-                android:id="@+id/testConnectionButton" />
+                android:id="@+id/testConnectionButton"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/button"
+                android:layout_weight="1" />
 
         </LinearLayout>
 

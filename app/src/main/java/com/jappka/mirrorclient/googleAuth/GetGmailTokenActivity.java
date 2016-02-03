@@ -5,9 +5,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,20 +15,11 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.jappka.mirrorclient.R;
 import com.jappka.mirrorclient.widget.CallAPI;
-import com.jappka.mirrorclient.widget.WidgetActivity;
 
-import org.json.JSONObject;
-
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Activity with Google API request
@@ -50,7 +39,7 @@ public class GetGmailTokenActivity extends Activity {
     private final String GET_AUTH_CODE_SCOPE = "audience:server:client_id:387059502730-bkjab985i9g2e6kivndov5g1c8j72sm6.apps.googleusercontent.com";
     private final String MIRROR_ID = "387059502730-iu0gr7u10f56qkvsme92cvt7q65sbo8k.apps.googleusercontent.com";
     private final String MIRROR_SECRET = "J1bNhWeoeobCuTYLUmcur_-W";
-    private final String SCOPE = "oauth2:server:client_id:" + MIRROR_ID+":api_scope:" + GMAIL_SCOPE;//+ " " + CALENDAR_SCOPE;
+    private final String SCOPE = "oauth2:server:client_id:" + MIRROR_ID+":api_scope:" + GMAIL_SCOPE + " " + CALENDAR_SCOPE;
     /**
      * Interface elements on Authentication Page
      */
@@ -150,7 +139,6 @@ public class GetGmailTokenActivity extends Activity {
                         selectedAccount = account;
                         chooseAccountButton.setText("Change account");
                         selectedAccountLabel.setText("Current selected account: " + accountName);
-
                         break;
                     }
                 }
@@ -174,7 +162,7 @@ public class GetGmailTokenActivity extends Activity {
                 e.printStackTrace();
             }
             System.out.print(code);
-            CallAPI.exchengeCodeForToken(code, MIRROR_ID, MIRROR_SECRET);
+            CallAPI.exchangeCodeForToken(code, MIRROR_ID, MIRROR_SECRET);
             return code;
         }
 

@@ -16,4 +16,8 @@
         <item name="android:colorBackground">#a5a5a5</item>
     </style>
 
+    <style name="Description" parent="style/Title">
+        <item name="android:textSize">20dp</item>
+    </style>
+
 </resources>

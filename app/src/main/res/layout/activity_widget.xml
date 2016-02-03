@@ -103,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Item to add"
+                        android:text="Widget"
                         android:id="@+id/itemLabel" />
                 </LinearLayout>
 
@@ -139,7 +139,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Position X"
+                        android:text="Poziom"
                         android:id="@+id/positionXLabel" />
                 </LinearLayout>
 
@@ -176,7 +176,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Position Y"
+                        android:text="Pion"
                         android:id="@+id/positionYLabel"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
@@ -214,7 +214,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Width"
+                        android:text="Szerokość"
                         android:id="@+id/widthLabel"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
@@ -252,7 +252,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Heigh"
+                        android:text="Wysokość"
                         android:id="@+id/heightLabel"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
@@ -282,24 +282,24 @@
 
                 <Button
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Add"
+                    android:layout_height="fill_parent"
+                    android:text="Dodaj"
                     android:id="@+id/addWidgetButton"
                     android:layout_margin="0dp"
                     android:layout_weight="1" />
 
                 <Button
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Remove"
+                    android:layout_height="fill_parent"
+                    android:text="Usuń"
                     android:id="@+id/removeWidgetButton"
                     android:layout_margin="0dp"
                     android:layout_weight="1" />
 
                 <Button
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Remove All"
+                    android:layout_height="fill_parent"
+                    android:text="Usuń wszystko"
                     android:id="@+id/removeAllWidgetsButton"
                     android:layout_margin="0dp"
                     android:layout_weight="1" />

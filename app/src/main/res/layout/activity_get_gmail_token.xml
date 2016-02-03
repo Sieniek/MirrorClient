@@ -21,7 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:layout_margin="16dp">
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -32,7 +35,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Choose Google Account"
+                    android:text="@string/google_account_chooser_label"
                     android:id="@+id/chooseAccountButton" />
             </LinearLayout>
 
@@ -45,9 +48,12 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:text="No account selected!"
+                    android:text="@string/google_account_chooser_description"
                     android:id="@+id/selectedAccountLabel"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:textAppearance="@style/Description"
+                    android:layout_marginLeft="8dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -56,21 +62,28 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:layout_margin="16dp">
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auth Token:\n UKNOWN"
+                    android:text="@string/google_account_access_request_description"
                     android:id="@+id/googleTokenLabel"
                     android:enabled="true"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    android:gravity="right"
+                    android:textAppearance="@style/Description" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,7 +95,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Require Access"
+                    android:text="@string/google_verified_label"
                     android:id="@+id/requireGoogleAccessButton"
                     android:enabled="false" />
             </LinearLayout>

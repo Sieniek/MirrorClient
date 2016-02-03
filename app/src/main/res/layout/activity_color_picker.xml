@@ -7,61 +7,107 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jappka.mirrorclient.colorPicker.ColorPickerActivity">
+    tools:context="com.jappka.mirrorclient.colorPicker.ColorPickerActivity"
+    android:id="@+id/background">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:id="@+id/colorPickerContainer">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/colorPickerContainer">
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0"
+                android:id="@+id/redTextView"
+                android:layout_gravity="center_horizontal"
+                android:background="#a80000"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp" />
 
             <SeekBar
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/seekBar3" />
+                android:id="@+id/redSeekBar"
+                android:foregroundTint="#b00000"
+                android:max="255"
+                android:progress="0"
+                android:indeterminate="false" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <SeekBar
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/seekBar" />
-
-                <SeekBar
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/seekBar2" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="3">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:text="Choose color"
-                android:id="@+id/colorPickerButton"
-                android:layout_weight="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0"
+                android:id="@+id/greenTextView"
+                android:layout_gravity="center_horizontal"
+                android:background="#189100"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:text="Set color"
-                android:id="@+id/sendColorToServerButton"
-                android:layout_weight="1" />
+            <SeekBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/greenSeekBar"
+                android:foregroundTint="#bb0000"
+                android:indeterminate="false"
+                android:max="255"
+                android:progress="0" />
+
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0"
+                android:id="@+id/blueTextView"
+                android:layout_gravity="center_horizontal"
+                android:background="#0023b1"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp" />
+
+            <SeekBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/blueSeekBar"
+                android:max="255"
+                android:progress="0"
+                android:indeterminate="false" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

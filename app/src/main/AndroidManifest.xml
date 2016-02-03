@@ -27,6 +27,7 @@
         <activity
             android:name=".colorPicker.ColorPickerActivity"
             android:label="@string/title_activity_color_picker" />
+        <activity android:name=".twitter.TwitterActivity"></activity>
     </application>
 
 </manifest>

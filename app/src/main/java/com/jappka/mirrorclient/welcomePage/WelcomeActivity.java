@@ -24,7 +24,7 @@ public class WelcomeActivity extends Activity {
 
     RelativeLayout welcomeButtonsContainer, welcomePageFirstLayout;
     Button widgetActivityButton, networkCheckingButton, googleAuthButton, colorPicketButton,
-            creditsButton, startButton;
+            startButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,6 @@ public class WelcomeActivity extends Activity {
         setupNetworkCheckingButton();
         setupGoogleAuthButton();
         setupColorPicketButton();
-        setupCreditsButton();
     }
 
     private void setupElements(){
@@ -48,7 +47,6 @@ public class WelcomeActivity extends Activity {
         networkCheckingButton = (Button) findViewById(R.id.networkCheckingButton);
         googleAuthButton = (Button) findViewById(R.id.googleAuthButton);
         colorPicketButton = (Button) findViewById(R.id.colorPickerButton);
-        creditsButton = (Button) findViewById(R.id.creditsButton);
         startButton = (Button) findViewById(R.id.startButton);
     }
 
@@ -105,17 +103,6 @@ public class WelcomeActivity extends Activity {
             public void onClick(View v) {
                 Intent nextActivity = new Intent(WelcomeActivity.this, ColorPickerActivity.class);
                 startActivity(nextActivity);
-
-            }
-        });
-    }
-
-    private void setupCreditsButton(){
-        creditsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent nextActivity = new Intent(WelcomeActivity.this, GetGmailTokenActivity.class);
-//                startActivity(nextActivity);
 
             }
         });

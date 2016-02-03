@@ -129,10 +129,10 @@ public class WidgetActivity extends Activity {
         widgetList = new ArrayList<>();
         widgetList.add(new Widget("Spotify", "spotify-plugin", spotifyIcon));
         widgetList.add(new Widget("Twitter", "twitter", twitterIcon));
-        widgetList.add(new Widget("News", "news", newsIcon));
-        widgetList.add(new Widget("Clock and Weather", "clock-and-weather", weatherIcon));
+        widgetList.add(new Widget("Kanał RSS", "news", newsIcon));
+        widgetList.add(new Widget("Zegar i pogoda", "clock-and-weather", weatherIcon));
         widgetList.add(new Widget("Gmail", "gmail", gmailIcon));
-        widgetList.add(new Widget("Calendar", "calendar", calendarIcon));
+        widgetList.add(new Widget("Kalendarz", "calendar", calendarIcon));
     }
 
     /**
@@ -168,6 +168,9 @@ public class WidgetActivity extends Activity {
                     // position - 1 because first element on spinner is empty
                     currentSelectedWidget = widgetList.get(position - 1);
                     currentSelectedWidget.getIcon().setVisibility(View.VISIBLE);
+                    turnSeekBars(true);
+                } else {
+                    turnSeekBars(false);
                 }
             }
 
@@ -317,5 +320,13 @@ public class WidgetActivity extends Activity {
                 thread.start();
             }
         });
+    }
+
+    // if none item is selected seek bars should be disabled
+    private void turnSeekBars(boolean isAnyWidgetSelected){
+        positionXSeekBar.setEnabled(isAnyWidgetSelected);
+        positionYSeekBar.setEnabled(isAnyWidgetSelected);
+        widthSeekBar.setEnabled(isAnyWidgetSelected);
+        heightSeekBar.setEnabled(isAnyWidgetSelected);
     }
 }
